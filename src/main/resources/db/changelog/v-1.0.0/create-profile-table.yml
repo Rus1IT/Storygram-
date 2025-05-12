@@ -1,0 +1,68 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2025-02-11-02
+      author: rus1it
+      labels: production
+      context: prod, dev
+      comment: creating the profile table
+      changes:
+        - createTable:
+            tableName: profile
+            columns:
+              - column:
+                  name: profile_id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: account_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    unique: true
+
+              - column:
+                  name: first_name
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: last_name
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: birth_day
+                  type: date
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: profile_picture_url
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+
+              - column:
+                  name: bio
+                  type: VARCHAR(500)
+                  constraints:
+                    nullable: true
+
+        - addForeignKeyConstraint:
+            baseTableName: profile
+            baseColumnNames: account_id
+            referencedTableName: account
+            referencedColumnNames: account_id
+            constraintName: fk_profile_account
+            onDelete: CASCADE
+
+
+      rollback:
+        - dropTable:
+            tableName: profile

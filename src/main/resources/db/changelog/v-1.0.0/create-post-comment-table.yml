@@ -1,0 +1,81 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2025-02-12-08
+      author: rus1it
+      labels: production
+      context: prod, dev
+      comment: creating the post_comment table
+      changes:
+        - createTable:
+            tableName: post_comment
+            columns:
+              - column:
+                  name: comment_id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: post_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: profile_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: text
+                  type: TEXT
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: created_at
+                  type: TIMESTAMP WITH TIME ZONE
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: updated_at
+                  type: TIMESTAMP WITH TIME ZONE
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: parent_comment_id
+                  type: BIGINT
+
+        - addForeignKeyConstraint:
+            baseTableName: post_comment
+            baseColumnNames: post_id
+            referencedTableName: post
+            referencedColumnNames: post_id
+            constraintName: fk_post_comment_post
+            onDelete: CASCADE
+
+        - addForeignKeyConstraint:
+            baseTableName: post_comment
+            baseColumnNames: profile_id
+            referencedTableName: profile
+            referencedColumnNames: profile_id
+            constraintName: fk_post_comment_profile
+            onDelete: CASCADE
+
+        - addForeignKeyConstraint:
+            baseTableName: post_comment
+            baseColumnNames: parent_comment_id
+            referencedTableName: post_comment
+            referencedColumnNames: comment_id
+            constraintName: fk_post_comment_post_comment
+            onDelete: CASCADE
+
+      rollback:
+        - dropTable:
+            tableName: post_comment

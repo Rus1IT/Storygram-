@@ -1,0 +1,57 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2025-02-14-12
+      author: rus1it
+      labels: production
+      context: prod, dev
+      comment: creating the story_view table
+      changes:
+        - createTable:
+            tableName: story_view
+            columns:
+              - column:
+                  name: view_id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: story_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: profile_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: created_at
+                  type: TIMESTAMP WITH TIME ZONE
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+
+        - addForeignKeyConstraint:
+            baseTableName: story_view
+            baseColumnNames: profile_id
+            referencedTableName: profile
+            referencedColumnNames: profile_id
+            constraintName: fk_story_view_profile
+            onDelete: CASCADE
+
+        - addForeignKeyConstraint:
+            baseTableName: story_view
+            baseColumnNames: story_id
+            referencedTableName: story
+            referencedColumnNames: story_id
+            constraintName: fk_story_view_story
+            onDelete: CASCADE
+
+      rollback:
+        - dropTable:
+            tableName: story_view

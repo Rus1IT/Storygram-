@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - include:
+      file: 2025-03-08-add-account-type.yml
+      relativeToChangelogFile: true
+
+  - include:
+      file: 2025-03-09-add-post-shortcode.yml
+      relativeToChangelogFile: true
+
+  - include:
+      file: 2025-03-13-add-post_media-shortcode.yml
+      relativeToChangelogFile: true
+
+  - include:
+      file: 2025-03-16-add-post_comment-shortcode.yml
+      relativeToChangelogFile: true

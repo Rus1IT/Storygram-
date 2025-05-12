@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2025-03-16-01
+      author: rus1it
+      labels: production
+      context: prod, dev
+      comment: adding short code for post_comment
+      changes:
+        - addColumn:
+            tableName: post_comment
+            columns:
+              - column:
+                  name: short_code
+                  type: VARCHAR(25)
+                  constraints:
+                    nullable: false
+      rollback:
+        - dropColumn:
+            tableName: post_comment
+            columnName: short_code

@@ -1,0 +1,93 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2025-02-14-11
+      author: rus1it
+      labels: production
+      context: prod, dev
+      comment: creating the story table
+      changes:
+        - createTable:
+            tableName: story
+            columns:
+              - column:
+                  name: story_id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: profile_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: highlight_id
+                  type: BIGINT
+
+              - column:
+                  name: media_url
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: media_type
+                  type: VARCHAR(25)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: created_at
+                  type: TIMESTAMP WITH TIME ZONE
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: story_text
+                  type: VARCHAR(200)
+
+              - column:
+                  name: visibility
+                  type: VARCHAR(25)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: expiry_at
+                  type: TIMESTAMP WITH TIME ZONE
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: is_pinned
+                  type: BOOLEAN
+                  defaultValueComputed: false
+                  constraints:
+                    nullable: false
+
+        - addForeignKeyConstraint:
+            baseTableName: story
+            baseColumnNames: profile_id
+            referencedTableName: profile
+            referencedColumnNames: profile_id
+            constraintName: fk_story_profile
+            onDelete: CASCADE
+
+        - addForeignKeyConstraint:
+            baseTableName: story
+            baseColumnNames: highlight_id
+            referencedTableName: highlight
+            referencedColumnNames: highlight_id
+            constraintName: fk_story_highlight
+            onDelete: CASCADE
+
+
+      rollback:
+        - dropTable:
+            tableName: story
+

@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2025-03-08-01
+      author: rus1it
+      labels: production
+      context: prod, dev
+      comment: adding account type for account
+      changes:
+        - addColumn:
+            tableName: account
+            columns:
+              - column:
+                  name: account_type
+                  type: VARCHAR(25)
+                  constraints:
+                    nullable: false
+      rollback:
+        - dropColumn:
+            tableName: account
+            columnName: account_type

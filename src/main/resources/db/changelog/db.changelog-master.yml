@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-empty-database
+      author: rus1it
+      changes:
+        - tagDatabase:
+            tag: db_init
+  - include:
+      file: v-1.0.0/db.changelog-v.1.0.0.yml
+      relativeToChangelogFile: true
+
+  - changeSet:
+        id: 002-v.1.0.0-db
+        author: rus1it
+        changes:
+          - tagDatabase:
+              tag: v.1.0.0
+
+  - include:
+      file: v-1.0.1/db.changelog-v.1.0.1.yml
+      relativeToChangelogFile: true
+
+  - changeSet:
+      id: 003-v.1.0.1-db
+      author: rus1it
+      changes:
+      - tagDatabase:
+          tag: v.1.0.1

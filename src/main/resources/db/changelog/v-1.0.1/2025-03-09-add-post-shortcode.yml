@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2025-03-08-01
+      author: rus1it
+      labels: production
+      context: prod, dev
+      comment: adding short code for post
+      changes:
+        - addColumn:
+            tableName: post
+            columns:
+              - column:
+                  name: short_code
+                  type: VARCHAR(25)
+                  constraints:
+                    nullable: true
+      rollback:
+        - dropColumn:
+            tableName: post
+            columnName: short_code

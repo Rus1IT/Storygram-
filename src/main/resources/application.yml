@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: "Storygram"
+
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate.jdbc.time_zone: UTC
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5430/storygram}
+    username: ${SPRING_DATASOURCE_USERNAME:ruslan}
+    password: ${SPRING_DATASOURCE_PASSWORD:qwerty}
+    driverClassName: org.postgresql.Driver
+
+  liquibase:
+    change-log: db/changelog/db.changelog-master.yml
+
+  aws:
+    accessKey:  ${AWS_ACCESS_KEY}
+    secretKey:  ${AWS_SECRET_KEY}
+    bucketName: storygram-media
+    region:     eu-north-1
+    folders:
+      post:         post_media
+      profileImage: profile_image
+      story:        story_media
+
+  servlet:
+    multipart:
+      max-file-size:    100MB
+      max-request-size: 100MB
